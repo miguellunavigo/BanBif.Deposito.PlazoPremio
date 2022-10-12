@@ -1,0 +1,113 @@
+﻿@model BanBif.Deposito.PlazoPremio.BE.ReinventaDatosCampaniaResponse
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (!Model.Result)
+{
+
+    <div id="formfloat" class="form-box col-xs-12 col-sm-10 col-md-6 col-lg-6">
+
+        <h2><strong>La Campaña no existe o ya finalizo.</strong></h2>
+
+        @*<p>Gracias por elegirnos y confiar en nosotros.</p><p>En los próximos 2 días hábiles recibirás un correo a tu buzón confirmando tu afiliación al Microseguro de Sepelio.</p>*@
+    </div>
+
+}
+else
+{
+
+
+    <div id="formfloat" class="form-box col-xs-12 col-sm-10 col-md-6 col-lg-6">
+        <h2>
+            ¡Compártenos tus datos y nosotros te contactaremos!
+        </h2>
+
+        <div class="formulario">
+            <div class="input-box col-xs-12 col-md-12 col-sm-12 auto-0">
+                <input id="Documento" type="text" name="documento" required autocomplete="off" maxlength="8" onkeypress="return soloNumeros(event)" onchange="ValidateDNI(event)">
+                <label>Número de DNI</label>
+                <span id="spanErrorDNI" style="color: #FF5C5C; font-size: 15px;"></span>
+            </div>
+            <div class="input-box col-xs-12 col-md-12 col-sm-12 auto-0">
+                <input id="Nombres" type="text" name="documento" required autocomplete="off" maxlength="100">
+                <label>Nombre y Apellido</label>
+            </div>
+            <div class="input-box col-xs-12 col-md-12 col-sm-12 auto-0">
+                <input id="Celular" type="text" name="documento" required autocomplete="off" maxlength="9" onkeypress="return soloNumeros(event)" onchange="ValidateCelular(event)">
+                <label>Celular</label>
+                <span id="spanErrorCelular" style="color: #FF5C5C; font-size: 15px;"></span>
+            </div>
+            <div class="input-box col-xs-12 col-md-12 col-sm-12 auto-0">
+                <input id="Email" type="text" name="email" required autocomplete="off" maxlength="100" onchange="ValidateEmail()">
+                <label>Correo Electronico</label>
+                <span id="spanErrorEmail" style="color: #FF5C5C; font-size: 15px;"></span>
+            </div>
+
+            <div class="input-box col-xs-12 col-md-12 col-sm-12 auto-0">
+                <div style="text-align: center;">
+                    <div class="g-recaptcha" data-sitekey="6LePgKMUAAAAAK96lIyje7v2UFzIC33loqabo38N" style="display:inline-block"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 col-sm-12 auto-0">
+                <div style="width:304px; height:78px; margin:10px auto">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="ValidarTratamientoDatos" />
+                            <i class="input-helper"></i>
+                            <p style="padding: 0;">He leído y acepto la <a href="https://www.banbif.com.pe/Portals/0/PDF/CONSENTIMIENTO-DE-DATOS-PERSONALES.pdf" target="_blank"> Política de Tratamiento de Protección de Datos Personales.</a></p>
+                        </label>
+                    </div>
+
+                    <div class="f1-buttons">
+                        <a id="btnContinuar" style="float:none" class="btn btn-next bt-1">Continuar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div id="mydiv"></div>
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        debugger
+        tinymce.init({
+            selector: "#mydiv",
+            inline: true,
+            menubar: false
+        });
+
+        $(document).ready(function () {
+            $("#btnContinuar").click(function () {
+                if (($("#Documento").val() != "" && $("#spanErrorDNI").html() == "") && $("#Nombres").val() != "" &&
+                    ($("#Celular").val() != "" && $("#spanErrorCelular").html() == "") &&
+                   ($("#Email").val() != "" && $("#spanErrorEmail").html() == "")) {
+                       var request = {
+                            IdCampania:0,
+                            DocumentoIdentidad: $("#Documento").val(),
+                            NombresApellidos: $("#Nombres").val(),
+                            Telefono: $("#Celular").val(),
+                            Correo: $("#Email").val(),
+                            CheckProteccionDatos: $("#ValidarTratamientoDatos").is(":checked"),
+                        }
+
+                        sessionStorage.setItem("URL", "@ViewBag.URL");
+                        $.ajax({
+                            url: sessionStorage.URL + '/Home/RegistrarDatosCampania',
+                            type: "POST",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            processData: true,
+                            data: JSON.stringify(request),
+                            success: function (response) {
+                                $("#ldg_crm_form").load("@Url.Action("Index", "Gracias")")
+                            }
+
+                        });
+                }
+        })
+    })
+    </script>
+}

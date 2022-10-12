@@ -1,0 +1,184 @@
+﻿@model BanBif.Deposito.PlazoPremio.BE.ReinventaDatosCampaniaResponse
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if (Model.Result)
+    {
+        <title>@Model.Data.NombreCampania</title>
+    }
+    else
+    {
+        <title>No existe</title>
+    }
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link href="~/assets/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/form-elements.css">
+    <script src="~/assets/fonts/fonts.css"></script>
+
+    <!-- CSS -->
+
+    <link href="~/assets/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,400i,600,700" rel="stylesheet">
+    <link href="~/assets/css/alertifyjs/alertify.min.css" rel="stylesheet" />
+    <link href="~/assets/css/alertifyjs/default.css" rel="stylesheet" />
+
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i|Roboto+Slab&display=swap" rel="stylesheet">
+
+    <link rel="shortcut icon" href="~/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="~/assets/ico/favicon.ico">
+    <script src="~/assets/js/alertifyjs/alertify.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    @if (Model.Result)
+    {
+        <style>
+            .bg-cyan {
+                height: 30px;
+                width: 100%;
+                background: @Model.Data.ColorCabecera;
+                background: -moz-linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                background: -webkit-linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                background: linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#20a6ff",endColorstr="#2095ff",GradientType=1);
+                z-index: 10;
+            }
+
+            #ldg_crm_bnn-form {
+                background-color: #ffc000;
+                overflow: hidden;
+                background: @Model.Data.ColorCabecera;
+                background: -moz-linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                background: -webkit-linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                background: linear-gradient(90deg, @Model.Data.ColorCabecera 0%, @Model.Data.ColorDetalle 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#20a6ff",endColorstr="#2095ff",GradientType=1);
+            }
+
+        </style>
+    }
+
+</head>
+<body id="ldg_crm">
+    <nav id="ldg_crm_nav" class="bg-cyan">
+        <div class="centrado">
+            <a href="https://banbif.com.pe/"><img class="logo-bif" src="~/assets/img/logo-blanco.png" alt="logo"></a>
+        </div>
+    </nav>
+
+    @if (Model.Result)
+    {
+        <section id="ldg_crm_bnn-form">
+            <div id="p1" class="centrado">
+                <div class="banner-intro col-md-12" style="background:none!important">
+                    <div class="col-md-6 pt-4 pb-2" style="padding-right:0; padding-left:0;">
+                        <div class="header1">@(Model.Data.TextoPrimario)</div>
+                        <div class="header2">
+                            @(Model.Data.TextoSecundario)
+                        </div>
+
+                        @if (Model.Data.FlagCarrusel.Value)
+                        {
+                            <div class="owl-carousel portfolio-details-carousel">
+                                @foreach (var item in Model.Data.ListCarrusel)
+                                {
+                                    <div class="card ml-2 mr-2">
+                                        <div class="card-body">
+                                            <p>@item.TextoPrimario</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <img style="display: inline-block;float: left;" src="~/assets/img/@(Model.Data.ImagenSecundario)" alt="">
+                                <div class="card-body-nocarrusel">
+                                    <p>@(Model.Data.TextoTerciario)</p>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="card-body-masinfo">
+                            <p>@Html.Raw(Model.Data.MasInformacion)</p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-xs-12" style="text-align:center">
+                        <img class="img-banner" src="~/assets/img/@(Model.Data.ImagenPrimario)">
+                        <div class="card-body-vigencia">
+                            <p>Vigencia de campaña: Del @(Model.Data.FechaInicio.Value.ToString("dd/MM/yyyy")) al  @(Model.Data.FechaFin.Value.ToString("dd/MM/yyyy"))</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    <section id="ldg_crm_form">
+
+        @RenderBody()
+
+    </section>
+
+
+
+    <!-- Javascript -->
+    <script src="https://www.banbif.com.pe/Portals/0/Landing%20Registro/nvo/formulario/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="~/assets/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/Validaciones.js"></script>
+
+
+    <script src="https://www.banbif.com.pe/Portals/0/Landing%20Registro/nvo/formulario/assets/js/scripts.js"></script>
+
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+        <script>
+            $(".portfolio-details-carousel").owlCarousel({
+                autoplay: true,
+                autoplayHoverPause: true,
+                items: 4,
+                nav: true,
+                dots: true,
+                loop: true,
+                margin: 10,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: true,
+                        autoplay: true,
+                    },
+                    600: {
+                        items: 1,
+                        nav: true,
+                        autoplay: true,
+                    },
+                    1000: {
+                        items: 1,
+                        nav: true,
+                        loop: true,
+                        autoplay: true,
+                        margin: 20
+                    }
+                }
+            });
+
+
+        </script>
+
+</body>
+
+</html>

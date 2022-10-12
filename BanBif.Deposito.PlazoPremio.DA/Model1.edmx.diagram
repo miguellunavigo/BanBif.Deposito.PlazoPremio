@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7c5e7d9c0358412995f8341fb444686c" Name="Diagram1" ZoomLevel="127">
+        <EntityTypeShape EntityType="panelModel.ReinventaDatosCampaniaCarrusel" Width="3" PointX="6.125" PointY="5.125" />
+        <EntityTypeShape EntityType="panelModel.ReinventaDatosCampaniaRegistro" Width="3" PointX="6.125" PointY="1.75" />
+        <EntityTypeShape EntityType="panelModel.ReinventaDatosCampania" Width="1.5" PointX="3.875" PointY="1.75" />
+        <AssociationConnector Association="panelModel.FK_DatosCampaniaCarrusel_DatosCampania" />
+        <AssociationConnector Association="panelModel.FK_DatosCampaniaRegistro_DatosCampania" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
